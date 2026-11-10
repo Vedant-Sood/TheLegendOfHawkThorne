@@ -105,9 +105,11 @@ static func humanoid(ci, st, p):
 		ci.draw_colored_polygon(PackedVector2Array([hip + Vector2(-6 * s, -2), hip + Vector2(6 * s, -2), Vector2(9 * s + sin(ph) * 2 * mv, -2), Vector2(-9 * s - sin(ph) * 2 * mv, -2)]), body.darkened(0.12))
 	# torso
 	ci.draw_colored_polygon(PackedVector2Array([sh + Vector2(-6 * s, -1), sh + Vector2(6.5 * s, -1), hip + Vector2(5.5 * s, 3), hip + Vector2(-5.5 * s, 3)]), body)
-	ci.draw_line(sh + Vector2(5.5 * s, 1), hip + Vector2(4.5 * s, 0), acc.darkened(0.2), 1.5)
+	ci.draw_line(sh + Vector2(5.5 * s, 1), hip + Vector2(4.5 * s, 0), acc.darkened(0.1), 1.5)
+	ci.draw_line(sh + Vector2(-6 * s, -1), sh + Vector2(6.5 * s, -1), body.lightened(0.35), 1.2)
 	# head
-	ci.draw_circle(head, 6.5 * s, body.lightened(0.06))
+	ci.draw_circle(head, 6.5 * s, body.lightened(0.1))
+	ci.draw_arc(head, 6.5 * s, -2.6, -0.3, 8, body.lightened(0.45), 1.2)
 	if st.get("hood", false) or st.get("robe", false):
 		ell(ci, head + Vector2(-1.5, -0.5), 7.6 * s, 7.6 * s, dark, 12, PI * 0.6, PI * 2.1)
 	elif st.has("hair"):

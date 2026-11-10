@@ -1,0 +1,4 @@
+[test_room] Test Range
+region=kharon
+chunks=start flat_e pit_plat ruins cp wallclimb crates arena_s tower slide end
+e=thug gunner thug dockdrone thug thug gunner thug loader
