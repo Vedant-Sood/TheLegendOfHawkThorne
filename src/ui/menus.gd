@@ -646,9 +646,12 @@ func _draw_starmap(ci):
 			ci.draw_arc(point, 14 + sin(elapsed * 2), 0, TAU, 32, ACCENT, 1.5)
 		Art.glow(ci, point, 18 if region == current else 11, Color(color, 0.3))
 		ci.draw_circle(point, 5 if region == current else 3, color)
-		Art.text(ci, point + Vector2(-48, 23), _ellipsize(DB.regions[region].name, 135, 12), 12, color)
+		var label = _ellipsize(DB.regions[region].name, 92, 12)
+		var label_width = Art.font().get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
+		Art.text(ci, point + Vector2(-label_width * 0.5, 23), label, 12, color)
 	if not items.is_empty():
-		_draw_wrapped(ci, items[selected].label, Vector2(790, 564), 390, 19, GOLD, 3)
+		Art.text(ci, Vector2(790, 563), DB.regions.get(selected_region, {}).get("name", ""), 16, ACCENT)
+		_draw_wrapped(ci, items[selected].label, Vector2(790, 594), 390, 19, GOLD, 2)
 
 func _draw_local_map(ci):
 	if map_rooms.is_empty():
