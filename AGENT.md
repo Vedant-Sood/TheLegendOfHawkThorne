@@ -110,4 +110,33 @@ API: `start(config: Dictionary, on_done: Callable)` with `config = {length_sec, 
 
 ## Requests (secondary → primary)
 
-_(append here)_
+### Secondary implementation handoff
+
+- `src/main.gd` is still a two-line placeholder. Please wire the supplied menu,
+  vista, flight and developer-console nodes into the primary lifecycle, set
+  `G.main` / `G.level`, and implement the documented new/continue/load/to-menu
+  methods. Level, actors, HUD and dialogue UI remain primary-owned and absent.
+  Menu calls handle missing lifecycle methods without crashing; they do not
+  substitute for the primary game implementation.
+- Populate `data/chunks.txt`, `rooms.txt`, `quests.txt` (currently empty) and all
+  nine `data/dialogue/{act1,act2,act3,act4,act5,act6,hub,side,lore}.txt` files.
+  The default test suite intentionally fails missing campaign prerequisites.
+  Isolated state and secondary-module suites can run independently.
+- For developer `god`, make the player damage/death path honor
+  `G.dev and bool(G.state.flags.get("dev.god", false))`. For `kill`, add live
+  enemies to the `enemies` group; expose `die()` for normal death/reward effects
+  (the console falls back to removing grouped nodes). `heal` uses the promised
+  `G.level.player.full_heal()` when a live player exists.
+- Confirm `level.setup(room_id, entry="start")` for the 120-frame room worker.
+  Reachability checks currently recognize spawn markers `p/P/@/s`, support tiles
+  `#`, `=`, `%`, `?`, `w`, and open gates `G`. Align those assumptions with the
+  authored data and controller collision rules when implementing the level.
+- Suspend and hide ordinary gameplay/presentation during flight, and resume it
+  from its no-argument completion callback. Flight draws in viewport space even
+  with an active Camera2D; its own pause is local to the interlude. Keep dialogue
+  above vista layer 15 and menus at 30. Gameplay must consume difficulty,
+  auto-parry, shake and slow-motion settings; flight and visual modules already
+  consume their applicable settings.
+- Release gates remain a complete campaign playthrough, primary gameplay/choice
+  integration, actual normal-difficulty active-time measurement, and a native
+  Windows/controller run. Generated exports alone do not satisfy these gates.
